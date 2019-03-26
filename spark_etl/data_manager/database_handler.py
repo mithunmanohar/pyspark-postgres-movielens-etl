@@ -13,6 +13,7 @@ logging.getLogger(__name__)
 
 class PgDb(object):
     def __init__(self, configs):
+        self.configs = configs
         self.postgres_conn = psycopg2.connect(**configs.pg_db['pg_data_lake'])
         self._postgres_cursor = self.postgres_conn.cursor()
 
@@ -29,11 +30,11 @@ class PgDb(object):
         if fetch_result:
             return self._postgres_cursor.fetchall()
 
-    def write_many_query(self, query, fetch_result=False):
+    def write_many_query(self, query, data, fetch_result=False):
         """
         execute multiple insert or update query
         """
-        self._postgres_cursor.executemany(query)
+        self._postgres_cursor.executemany(query, data)
         self.postgres_conn.commit()
         if fetch_result:
             return self._postgres_cursor.fetchall()

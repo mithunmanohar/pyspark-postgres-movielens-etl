@@ -34,7 +34,7 @@ class PgDb(object):
         """
         execute multiple insert or update query
         """
-        self._postgres_cursor.executemany(query, data)
+        self._postgres_cursor.execute(query, data)
         self.postgres_conn.commit()
         if fetch_result:
             return self._postgres_cursor.fetchall()

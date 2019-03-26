@@ -5,11 +5,14 @@ Script for initial database setup
 """
 import os
 import sys
+import logging
 sys.path.insert(0, '/spark_etl')
 
 # local imports
 from data_manager.database_handler import PgDb
 from etl_conf import conf
+
+logging.getLogger(__name__)
 
 class SetupDb(PgDb):
     #def __init__(self, configs):
@@ -17,8 +20,8 @@ class SetupDb(PgDb):
 
     def create_db_tables(self):
         category_table = """CREATE TABLE if not EXISTS t_movie_category(
-        id SERIAL PRIMARY KEY,
-        category VARCHAR(50) NOT NULL,
+        id SERIAL,
+        category VARCHAR(50) PRIMARY KEY,
         category_id INT NOT NULL
         )
         """
@@ -60,13 +63,15 @@ class SetupDb(PgDb):
                     ('Action', 19),
                     ('Sci-Fi', 20)]
 
-
         records_list = ','.join(['%s'] * len(categories))
         insert_query = 'INSERT INTO t_movie_category (category, category_id) values {}'.format(
             records_list)
-        self.write_many_query(insert_query, data)
-        logging.info("inserted default values")
-
+        
+        try:
+            self.write_many_query(insert_query, categories)
+        except Exception as e:
+            print('categories exists in the table')
+              
 
 if __name__ == "__main__":
     ENV = os.getenv('ENVIRONMENT', 'DEV')

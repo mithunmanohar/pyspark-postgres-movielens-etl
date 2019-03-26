@@ -13,6 +13,7 @@ logging.getLogger(__name__)
 
 class PgDb(object):
     def __init__(self, configs):
+        self.configs = configs
         self.postgres_conn = psycopg2.connect(**configs.pg_db['pg_data_lake'])
         self._postgres_cursor = self.postgres_conn.cursor()
 

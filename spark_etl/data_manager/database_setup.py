@@ -16,16 +16,18 @@ class SetupDb(PgDb):
     #    self.conn = PgDb(configs)
 
     def create_db_tables(self):
-        category_table = """CREATE TABLE if not EXISTS movie_categories(
+        category_table = """CREATE TABLE if not EXISTS t_movie_category(
         id SERIAL PRIMARY KEY,
         category VARCHAR(50) NOT NULL,
         category_id INT NOT NULL
         )
         """
 
-        self.write_query(category_table)
 
-        movie_rank_table = """CREATE TABLE if not exists movie_ranks
+        self.write_query(category_table)
+        logging.info("check/ create t_movie_category done")
+
+        movie_rank_table = """CREATE TABLE if not exists t_movie_rank
         (id SERIAL PRIMARY KEY,
          decade INT NOT NULL,
          category_id INT NOT NULL,
@@ -37,9 +39,35 @@ class SetupDb(PgDb):
         self.write_query(movie_rank_table)
 
     def insert_defaults(self):
-        movie_categories = self.movie_categories
+        categories = [('Crime', 1),
+                    ('Romance', 2),
+                    ('Thriller', 3),
+                    ('Adventure', 4),
+                    ('Drama', 5),
+                    ('War', 6),
+                    ('Documentary', 7),
+                    ('Fantasy', 8),
+                    ('Mystery', 9),
+                    ('Musical', 10),
+                    ('Animation', 11),
+                    ('Film-Noir', 12),
+                    ('(no genres listed)',13),
+                    ('IMAX',14),
+                    ('Horror', 15),
+                    ('Western', 16),
+                    ('Comedy', 17),
+                    ('Children', 18),
+                    ('Action', 19),
+                    ('Sci-Fi', 20)]
 
-    
+
+        records_list = ','.join(['%s'] * len(categories))
+        insert_query = 'INSERT INTO t_movie_category (category, category_id) values {}'.format(
+            records_list)
+        self.write_many_query(insert_query, data)
+        logging.info("inserted default values")
+
+
 if __name__ == "__main__":
     ENV = os.getenv('ENVIRONMENT', 'DEV')
     configs = conf[ENV]

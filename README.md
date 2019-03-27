@@ -44,11 +44,13 @@ Requirements:
 Database schema
 Two tables - stores movie categories, movie ranks
 1. t_movie_category: stores the movie categories
+
    id SERIAL PRIMARY KEY ,
    category VARCHAR(50) NOT NULL,
    category_id INT NOT NULL
    
 2. t_movie_rank - stores decade wise movie ranks per category
+
    id SERIAL PRIMARY KEY,
    decade INT NOT NULL,
    category_id INT NOT NULL,

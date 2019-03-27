@@ -1,0 +1,11 @@
+[2019-03-26 13:28:12,212] [etl_manager.py:58] INFO - Downloading file from http://files.grouplens.org/datasets/movielens/ml-20m-youtube.zip
+[2019-03-26 13:28:14,718] [etl_manager.py:43] INFO - Unzipping file from: /spark_etl/data/ml-20m-youtube.zip
+[2019-03-26 13:28:14,733] [etl_manager.py:62] INFO - Downloading file http://files.grouplens.org/datasets/movielens/ml-10m.zip
+[2019-03-26 13:28:26,247] [etl_manager.py:43] INFO - Unzipping file from: /spark_etl/data/ml-10m.zip
+[2019-03-26 13:28:28,050] [etl_manager.py:34] INFO - Initialised database check/ creation
+[2019-03-27 04:48:42,293] [etl_manager.py:60] INFO - Downloading file from http://files.grouplens.org/datasets/movielens/ml-20m-youtube.zip
+[2019-03-27 04:48:44,951] [etl_manager.py:45] INFO - Unzipping file from: /spark_etl/data/ml-20m-youtube.zip
+[2019-03-27 04:48:44,966] [etl_manager.py:64] INFO - Downloading file http://files.grouplens.org/datasets/movielens/ml-10m.zip
+[2019-03-27 04:48:56,618] [etl_manager.py:45] INFO - Unzipping file from: /spark_etl/data/ml-10m.zip
+[2019-03-27 04:48:58,449] [etl_manager.py:35] INFO - Initialised database check/ creation
+[2019-03-27 04:48:59,032] [database_setup.py:31] INFO - check/ create t_movie_category done

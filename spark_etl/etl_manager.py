@@ -11,7 +11,7 @@ import logging
 sys.path.insert(0, os.getcwd())
 from etl_conf import conf
 from data_manager.file_handler import FileHandler
-from data_manager.database_handler import PgDb
+from data_manager.database_setup import SetupDb
 
 # init logger
 file_handler = logging.FileHandler(filename='logs/etl.log')
@@ -28,11 +28,13 @@ class EtlManager(object):
     def __init__(self, configs):
         self.configs = configs
         self.file_handler = FileHandler(self.configs)
-        self.data_base = PgDb(self.configs)
+        self.data_base = SetupDb(self.configs)
+
 
     def check_create_database(self):
         logging.info("Initialised database check/ creation")
-        pass
+        self.data_base.create_db_tables()
+        self.data_base.insert_defaults()
 
     def unzip_file(self, file_name):
         """

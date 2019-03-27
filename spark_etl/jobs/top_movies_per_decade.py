@@ -73,23 +73,25 @@ def main(conf):
     category_df = spark_session.createDataFrame(categories,
                                                 ['categories',
                                                  'category_id'])
-    top10 = top10.join(broadcast(category_df), ['categories'])
-    movie_data = movie_data.drop('genre')
-    top10 = top10.join(broadcast(movie_data), ['movie_id'],
+    top10 = top10.join(func.broadcast(category_df), ['categories'])
+    movie_data = movies_df.drop('genre')
+    top10 = top10.join(func.broadcast(movie_data), ['movie_id'],
                        how='left').drop('categories', 'freq')
     top10 = top10.withColumnRenamed('r', 'rank')
+    
+    print(top10.show(1000))
     pg_cred = conf.pg_db['pg_data_lake']
 
-    top10.write.jdbc(
-        url="jdbc:" + pg_cred['host'] + '/' + pg_cred['dbname'],
-        table="t_movie_rank",
-        mode="overwrite",
-        properties={
-            "user": pg_cred['user'],
-            "password": pg_cred['password'],
-            "driver": "org.postgresql.Driver"
-        }
-    )
+    #top10.write.jdbc(
+    #    url="jdbc:" + pg_cred['host'] + '/' + pg_cred['dbname'],
+    #    table="t_movie_rank",
+    #    mode="overwrite",
+    #     properties={
+     #       "user": pg_cred['user'],
+      #      "password": pg_cred['password'],
+       #     "driver": "org.postgresql.Driver"
+        #}
+  #  )
 
 
 if __name__ == '__main__':

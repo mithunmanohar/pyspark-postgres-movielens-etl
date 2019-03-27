@@ -33,11 +33,25 @@ Requirements:
  
     **``pip install -r requirements.txt``**
   
-7. run script to pull data to local
+7. run script to pull data to local, create database, insert default schemas, data
    **``python etl_manager.py``**
 
 . Run the first spark job using spark-submit
 
-    **``/usr/spark-2.4.0/bin/spark-submit /spark_etl/jobs/top_movies_per_decade.py --jars /spark_etl/jobs/postgresql-42.2.5.jar``**
+    **``/usr/spark-2.4.0/bin/spark-submit --driver-class-path /spark_etl/data_manager/postgresql-42.2.5.jar  /spark_etl/jobs/top_movies_per_decade.py``**
   
   
+Database schema
+Two tables - stores movie categories, movie ranks
+1. t_movie_category: stores the movie categories
+   id SERIAL PRIMARY KEY ,
+   category VARCHAR(50) NOT NULL,
+   category_id INT NOT NULL
+   
+2. t_movie_rank - stores decade wise movie ranks per category
+   id SERIAL PRIMARY KEY,
+   decade INT NOT NULL,
+   category_id INT NOT NULL,
+   rank INT NOT NULL,
+   movie_id INT NOT NULL,
+   movie_name VARCHAR(256)

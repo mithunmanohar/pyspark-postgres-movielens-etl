@@ -11,11 +11,11 @@ Requirements:
 
 1. Clone the code base from this github repo using command:
 
-    **``git clone https://github.com/mithunmanohar/spark-postgre-etl.git``**
+    **``git clone https://github.com/mithunmanohar/spark-postgres-etl.git``**
   
 2. Change directory to folder:
   
-    **``cd spark-postgre-etl``**
+    **``cd spark-postgres-etl``**
 
 3. Build and start the spark container using docker compose file from this folder using command:
   
@@ -33,8 +33,11 @@ Requirements:
  
     **``pip install -r requirements.txt``**
   
-6. Run the first spark job using spark-submit
+7. run script to pull data to local
+   **``python etl_manager.py``**
 
-    **``/usr/spark-2.4.0/bin/spark-submit /spark_etl/top_category_movies.py``**
+. Run the first spark job using spark-submit
+
+    **``/usr/spark-2.4.0/bin/spark-submit /spark_etl/jobs/top_movies_per_decade.py --jars /spark_etl/jobs/postgresql-42.2.5.jar``**
   
   

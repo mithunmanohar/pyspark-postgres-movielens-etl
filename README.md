@@ -57,3 +57,5 @@ Two tables - stores movie categories, movie ranks
    rank INT NOT NULL,
    movie_id INT NOT NULL,
    movie_name VARCHAR(256)
+
+Output data : https://github.com/mithunmanohar/spark-postgres-etl/blob/master/spark_etl/output.txt

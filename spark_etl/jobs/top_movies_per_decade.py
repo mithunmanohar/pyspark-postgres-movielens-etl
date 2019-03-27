@@ -63,6 +63,34 @@ def main(conf):
     top10 = ratings_agg.where(ratings_agg["rank"] <= 10)
 
     top10.show(100)
+    categories = [('Crime', 1), ('Romance', 2), ('Thriller', 3),
+                  ('Adventure', 4), ('Drama', 5), ('War', 6),
+                  ('Documentary', 7), ('Fantasy', 8), ('Mystery', 9),
+                  ('Musical', 10), ('Animation', 11), ('Film-Noir', 12),
+                  ('(no genres listed)', 13), ('IMAX', 14),
+                  ('Horror', 15), ('Western', 16), ('Comedy', 17),
+                  ('Children', 18), ('Action', 19), ('Sci-Fi', 20)]
+    category_df = spark_session.createDataFrame(categories,
+                                                ['categories',
+                                                 'category_id'])
+    top10 = top10.join(broadcast(category_df), ['categories'])
+    movie_data = movie_data.drop('genre')
+    top10 = top10.join(broadcast(movie_data), ['movie_id'],
+                       how='left').drop('categories', 'freq')
+    top10 = top10.withColumnRenamed('r', 'rank')
+    pg_cred = conf.pg_db['pg_data_lake']
+
+    top10.write.jdbc(
+        url="jdbc:" + pg_cred['host'] + '/' + pg_cred['dbname'],
+        table="t_movie_rank",
+        mode="overwrite",
+        properties={
+            "user": pg_cred['user'],
+            "password": pg_cred['password'],
+            "driver": "org.postgresql.Driver"
+        }
+    )
+
 
 if __name__ == '__main__':
     ENV = os.getenv('ENV', 'DEV')

@@ -24,8 +24,8 @@ class DevelopmentConfig(Config):
 
     pg_db = {"pg_data_lake": {"dbname": "datalake",
                               "user": "datalake",
-                              "host": "datalake.cbpte60mn2ce.us-east-2.rds.amazonaws.com",
-                              "password": "Qwas1234!",
+                              "host": "xxxxxxxxxxx.us-east-2.rds.amazonaws.com",
+                              "password": "xxxxx",
                               "port": "5432"
 
                                  }}

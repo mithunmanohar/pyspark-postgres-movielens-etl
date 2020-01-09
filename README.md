@@ -1,5 +1,5 @@
 # spark-postgre-etl
-Dockerised Apache spark 2.x job to pull MovieLens data, process it and store results to post-gres database
+Dockerised Apache spark 2.x job to pull MovieLens data, process it and store the results into post-gres database
 
 
 ## Setting up the environments
